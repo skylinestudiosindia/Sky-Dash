@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Sky Dash - Loading</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh; /* Universal Screen Height Fix */
+            overflow: hidden;
+            background-color: #0d1b2a;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        
+        /* Universal Fullscreen Background (GPU Accelerated) */
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Loading UI Container */
+        .loading-container {
+            position: relative;
+            z-index: 2;
+            width: 85%;
+            max-width: 400px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .loading-text {
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Subway Surfers Style Outer Bar */
+        .progress-box {
+            width: 100%;
+            height: 22px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 3px solid #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            padding: 2px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Smooth Fill Bar */
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff9f04, #ff5e00);
+            border-radius: 8px;
+            will-change: width;
+            transition: width 0.05s linear;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Priority Background Loading for Zero Lag -->
+    <img src="loading_bg.jpg" alt="Loading Background" class="bg-image" fetchpriority="high" decoding="sync">
+
+    <!-- Loading Bar UI -->
+    <div class="loading-container">
+        <div class="loading-text" id="status-text">LOADING... 0%</div>
+        <div class="progress-box">
+            <div class="progress-bar" id="fill-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        const fillBar = document.getElementById('fill-bar');
+        const statusText = document.getElementById('status-text');
+        
+        const totalDuration = 13000; // Exactly 13 seconds
+        const startTime = performance.now();
+
+        function updateProgress(currentTime) {
+            const elapsedTime = currentTime - startTime;
+            const progressRatio = Math.min(elapsedTime / totalDuration, 1);
+            const percentage = Math.floor(progressRatio * 100);
+
+            fillBar.style.width = percentage + '%';
+            statusText.innerText = `LOADING... ${percentage}%`;
+
+            if (progressRatio < 1) {
+                requestAnimationFrame(updateProgress); // Smooth 60FPS update loop without lag
+            } else {
+                window.location.href = "game.html"; // Redirect to game after 13s
+            }
+        }
+
+        requestAnimationFrame(updateProgress);
+    </script>
+
+</body>
+</html>
+
