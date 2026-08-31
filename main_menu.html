@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sky Dash - Main Menu</title>
     
-    <!-- Image Preload for Super-Fast Loading -->
+    <!-- Image Preload for Zero Lag -->
     <link rel="preload" as="image" href="main_menu.jpg" fetchpriority="high">
 
     <style>
@@ -30,7 +30,7 @@
             left: 0;
         }
 
-        /* Responsive Main Container */
+        /* Screen Wrapper */
         .menu-wrapper {
             position: relative;
             width: 100vw;
@@ -40,12 +40,11 @@
             max-width: 500px;
             margin: 0 auto;
             overflow: hidden;
-            /* GPU Speed Optimization */
             will-change: transform;
             transform: translate3d(0, 0, 0);
         }
 
-        /* Full Screen Background Image */
+        /* Fullscreen Background */
         .bg-image {
             width: 100%;
             height: 100%;
@@ -54,42 +53,98 @@
             display: block;
         }
 
-        /* Invisible Touch Buttons Base */
+        /* ----- ANIMATIONS & SHINE EFFECTS ----- */
+        
+        /* 1. Continuous Floating Pulse Effect for Buttons */
+        @keyframes pulseGlow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        /* 2. TAP TO PLAY Big Pulse Effect */
+        @keyframes playPulse {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.06); filter: brightness(1.2); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+
+        /* 3. Sweeping Light/Shine Wave Animation */
+        @keyframes shineSweep {
+            0% { left: -150%; }
+            50% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        /* Touch Layer Styling */
         .btn-target {
             position: absolute;
             cursor: pointer;
             z-index: 10;
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0); /* Completely Invisible */
-            transition: transform 0.08s ease;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            animation: pulseGlow 2.5s infinite ease-in-out;
         }
 
-        /* Smooth Touch Press Effect */
+        /* Glowing Light Overlay Layer */
+        .btn-target::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 60%;
+            height: 200%;
+            background: linear-gradient(
+                60deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(25deg);
+            animation: shineSweep 3s infinite ease-in-out;
+        }
+
+        /* Touch Press (Instant Bounce Response) */
         .btn-target:active {
-            transform: scale(0.92);
-            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0.90) !important;
+            filter: brightness(1.4);
+            border-color: #ffffff;
         }
 
-        /* --- PHOTO KE BUTTONS KI EXACT POSITION --- */
+        /* ----- BUTTON POSITIONS ----- */
 
-        /* Left Column Buttons */
-        .btn-high-score { top: 33.5%; left: 3.5%; width: 20%; height: 11%; }
-        .btn-missions-left { top: 47.5%; left: 3.5%; width: 20%; height: 11%; }
-        .btn-daily-reward { top: 61.5%; left: 3.5%; width: 20%; height: 11%; }
+        /* Side Grid Buttons */
+        .btn-high-score    { top: 33.5%; left: 3.5%; width: 20%; height: 11%; animation-delay: 0s; }
+        .btn-missions-left { top: 47.5%; left: 3.5%; width: 20%; height: 11%; animation-delay: 0.3s; }
+        .btn-daily-reward  { top: 61.5%; left: 3.5%; width: 20%; height: 11%; animation-delay: 0.6s; }
 
-        /* Right Column Buttons */
-        .btn-fuel { top: 33.5%; right: 3.5%; width: 20%; height: 11%; }
-        .btn-hangar-right { top: 47.5%; right: 3.5%; width: 20%; height: 11%; }
-        .btn-events-right { top: 61.5%; right: 3.5%; width: 20%; height: 11%; }
+        .btn-fuel          { top: 33.5%; right: 3.5%; width: 20%; height: 11%; animation-delay: 0.2s; }
+        .btn-hangar-right  { top: 47.5%; right: 3.5%; width: 20%; height: 11%; animation-delay: 0.5s; }
+        .btn-events-right  { top: 61.5%; right: 3.5%; width: 20%; height: 11%; animation-delay: 0.8s; }
 
-        /* TAP TO PLAY Button */
-        .btn-play { top: 76.8%; left: 25.5%; width: 49%; height: 7.5%; border-radius: 35px; }
+        /* Main TAP TO PLAY Button Animation */
+        .btn-play {
+            top: 76.8%;
+            left: 25.5%;
+            width: 49%;
+            height: 7.5%;
+            border-radius: 35px;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(255, 160, 0, 0.8);
+            animation: playPulse 1.6s infinite ease-in-out;
+        }
+
+        .btn-play::after {
+            animation-duration: 2s;
+        }
 
         /* Bottom Menu Bar Buttons */
-        .btn-nav-missions { top: 87.5%; left: 3.5%; width: 21%; height: 9.5%; }
-        .btn-nav-hangar { top: 87.5%; left: 27.5%; width: 21%; height: 9.5%; }
-        .btn-nav-shop { top: 87.5%; left: 51.5%; width: 21%; height: 9.5%; }
-        .btn-nav-events { top: 87.5%; left: 75.5%; width: 21%; height: 9.5%; }
+        .btn-nav-missions { top: 87.5%; left: 3.5%; width: 21%; height: 9.5%; animation-delay: 0.1s; }
+        .btn-nav-hangar   { top: 87.5%; left: 27.5%; width: 21%; height: 9.5%; animation-delay: 0.3s; }
+        .btn-nav-shop     { top: 87.5%; left: 51.5%; width: 21%; height: 9.5%; animation-delay: 0.5s; }
+        .btn-nav-events   { top: 87.5%; left: 75.5%; width: 21%; height: 9.5%; animation-delay: 0.7s; }
     </style>
 </head>
 <body>
@@ -98,20 +153,20 @@
         <!-- Main Background Image -->
         <img src="main_menu.jpg" alt="Sky Dash Menu" class="bg-image" fetchpriority="high" decoding="sync">
 
-        <!-- Left Buttons Touch Layer -->
+        <!-- Left Column Buttons -->
         <div class="btn-target btn-high-score" onclick="openPopup('High Score')"></div>
         <div class="btn-target btn-missions-left" onclick="openPopup('Missions')"></div>
         <div class="btn-target btn-daily-reward" onclick="openPopup('Daily Reward')"></div>
 
-        <!-- Right Buttons Touch Layer -->
+        <!-- Right Column Buttons -->
         <div class="btn-target btn-fuel" onclick="openPopup('Fuel / Energy')"></div>
         <div class="btn-target btn-hangar-right" onclick="openPopup('Hangar')"></div>
         <div class="btn-target btn-events-right" onclick="openPopup('Events')"></div>
 
-        <!-- TAP TO PLAY Touch Layer -->
+        <!-- TAP TO PLAY Main Button -->
         <div class="btn-target btn-play" onclick="startGame()"></div>
 
-        <!-- Bottom Navigation Bar Touch Layer -->
+        <!-- Bottom Navigation Bar Buttons -->
         <div class="btn-target btn-nav-missions" onclick="openPopup('Missions')"></div>
         <div class="btn-target btn-nav-hangar" onclick="openPopup('Hangar')"></div>
         <div class="btn-target btn-nav-shop" onclick="openPopup('Shop')"></div>
@@ -119,12 +174,10 @@
     </div>
 
     <script>
-        // Start Game Redirect
         function startGame() {
             window.location.href = "game.html";
         }
 
-        // Popup Message for Other Buttons
         function openPopup(name) {
             alert(name + " feature is coming soon!");
         }
