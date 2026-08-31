@@ -5,367 +5,181 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sky Dash - Main Menu</title>
     
+    <!-- Ultra-Low Latency Rendering -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Fast Image Preload -->
+    <link rel="preload" as="image" href="main_menu.jpg">
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* Disable user selection and callouts for a native app feel */
             user-select: none;
             -webkit-user-select: none;
             -webkit-touch-callout: none;
-            -webkit-tap-highlight-color: transparent; /* Remove the blue tap highlight */
+            -webkit-tap-highlight-color: transparent;
         }
+
         html, body {
             width: 100vw;
             height: 100vh;
             height: -webkit-fill-available;
-            height: 100dvh; /* Dynamic viewport height for modern browsers */
+            height: 100dvh;
             overflow: hidden;
             background-color: #0d1b2a;
-            position: fixed; /* Prevent scrolling */
+            position: fixed;
             top: 0;
             left: 0;
         }
 
-        /* Essential Game Wrapper: Force Aspect Ratio and GPU usage */
+        /* Responsive Main Frame (GPU Accelerated) */
         #game-wrapper {
             position: relative;
-            width: 100%;
-            height: 100%;
-            margin: 0 auto;
-            overflow: hidden;
-            
-            /* Enable GPU Hardware Acceleration for Zero-Lag Transitions */
-            will-change: transform;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            
-            /* Responsive Aspect Ratio Control - forces native game feeling on all screens */
-            aspect-ratio: 9 / 16;
-            max-width: 500px; /* Optional, good for large desktop screens to maintain feeling */
-        }
-
-        /* --- Graphics Layer --- */
-        .background-sky {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Cover entire area, crop as needed */
-            object-position: center center; /* Keep image centered */
-            z-index: 1;
-            transform: translate3d(0, 0, 0); /* Force GPU usage */
-        }
-
-        /* --- Interactive UI Elements --- */
-        
-        /* Define your button targets based on image_0.png layout */
-        
-        /* Left Column Buttons (High Score, Missions, Daily Reward) */
-        .left-col-buttons {
-            position: absolute;
-            top: 30%; /* Start position for first button */
-            left: 5%;
-            width: 25%;
-            height: 45%;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 15%; /* Space between buttons */
-        }
-
-        /* Right Column Buttons (Fuel, Hangar, Events) */
-        .right-col-buttons {
-            position: absolute;
-            top: 30%; /* Start position for first button */
-            right: 5%;
-            width: 25%;
-            height: 45%;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 15%; /* Space between buttonsBhai, calm down. It looks like things got a little out of hand, and my last image wasn't what you wanted at all. That was an animated photo of a phone, not the actual *game code* and layout you're trying to build!
-
-I’m here to fix that, right now. I completely apologize for the confusion. We are going to build the actual **`main_menu.html`** file that puts your clean background on the screen, fits it perfectly, and has all those smooth animations and shining buttons you requested, *on the actual screen*, not in a photo.
-
-We are going to make it work. Just focus on this and copy the entire code below into your `main_menu.html` file on GitHub. This code contains everything needed to make your background image perfectly fit, perfectly animate, and perfectly run on any mobile device without lag.
-
-### The Actual Final Code for `main_menu.html` (Complete, Fixed, Optimized):
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Sky Dash - Main Menu</title>
-    
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            /* Disable user selection and callouts for a native app feel */
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-tap-highlight-color: transparent; /* Remove the blue tap highlight */
-        }
-        html, body {
             width: 100vw;
             height: 100vh;
-            height: -webkit-fill-available;
-            height: 100dvh; /* Dynamic viewport height for modern browsers */
-            overflow: hidden;
-            background-color: #0d1b2a;
-            position: fixed; /* Prevent scrolling */
-            top: 0;
-            left: 0;
-        }
-
-        /* Essential Game Wrapper: Force Aspect Ratio and GPU usage */
-        #game-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
+            height: 100dvh;
+            max-width: 500px;
             margin: 0 auto;
             overflow: hidden;
-            
-            /* Enable GPU Hardware Acceleration for Zero-Lag Transitions */
             will-change: transform;
-            transform: translateZ(0);
+            transform: translate3d(0, 0, 0);
             backface-visibility: hidden;
-            
-            /* Responsive Aspect Ratio Control - forces native game feeling on all screens */
-            aspect-ratio: 9 / 16;
-            max-width: 500px; /* Optional, good for large desktop screens to maintain feeling */
         }
 
-        /* --- Graphics Layer --- */
-        .background-sky {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Universal Background Image Fitting */
+        .bg-image {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Cover entire area, crop as needed */
-            object-position: center center; /* Keep image centered */
-            z-index: 1;
-            transform: translate3d(0, 0, 0); /* Force GPU usage */
+            object-fit: cover;
+            object-position: center;
+            display: block;
         }
 
-        /* --- Interactive UI Elements --- */
-        
-        /* Define your button targets based on image_0.png layout */
-        
-        /* Left Column Buttons (High Score, Missions, Daily Reward) */
-        .left-col-buttons {
-            position: absolute;
-            top: 30%; /* Start position for first button */
-            left: 5%;
-            width: 25%;
-            height: 45%;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 15%; /* Space between buttons */
+        /* ----- ANIMATION & SHINE EFFECTS ----- */
+
+        @keyframes pulseBorder {
+            0% { transform: scale(1); box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); }
+            50% { transform: scale(1.03); box-shadow: 0 0 16px rgba(255, 255, 255, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); }
         }
 
-        /* Right Column Buttons (Fuel, Hangar, Events) */
-        .right-col-buttons {
-            position: absolute;
-            top: 30%; /* Start position for first button */
-            right: 5%;
-            width: 25%;
-            height: 45%;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 15%; /* Space between buttons */
+        @keyframes playGlow {
+            0% { transform: scale(1); filter: brightness(1); box-shadow: 0 0 15px #ffaa00; }
+            50% { transform: scale(1.05); filter: brightness(1.25); box-shadow: 0 0 25px #ffea00; }
+            100% { transform: scale(1); filter: brightness(1); box-shadow: 0 0 15px #ffaa00; }
         }
 
-        /* Standardized button target styling with animations */
+        @keyframes lightSweep {
+            0% { left: -120%; }
+            40% { left: 140%; }
+            100% { left: 140%; }
+        }
+
+        /* Button Target Overlay Base Class */
         .btn-target {
-            flex: 1; /* Stretch to fill space in column */
-            background-color: rgba(255, 255, 255, 0.0); /* Invisible, but present for clicks */
-            cursor: pointer;
-            border-radius: 12px;
-            
-            /* Essential for GPU-backed animation efficiency */
-            will-change: transform, box-shadow;
-            transform: translateZ(0); 
-
-            /* --- Animations --- */
-            /* Standard continuous pulse and shine animation */
-            animation: pulse-cue 2.5s infinite ease-in-out, shine-sweep 3s infinite ease-in-out;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-        }
-
-        /* High-response active (tapped) state with haptic bounce */
-        .btn-target:active {
-            transform: scale(0.92) translateZ(0); /* Quick shrink */
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* Intense glow on tap */
-        }
-
-        /* --- Main TAP TO PLAY Button --- */
-        .play-button-overlay {
             position: absolute;
-            top: 75%; /* Based on image_0.png */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60%;
-            height: 10%;
-            background-color: rgba(255, 255, 255, 0.0);
-            z-index: 10;
             cursor: pointer;
-            border-radius: 50px;
-            
-            /* Custom play button animation for extra prominence */
-            will-change: transform, box-shadow;
-            animation: pulse-cue 1.8s infinite ease-in-out, shine-sweep-intense 2.5s infinite ease-in-out;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-        }
-
-        .play-button-overlay:active {
-            transform: translate(-50%, -50%) scale(0.95);
-            box-shadow: 0 0 25px rgba(255, 223, 0, 0.9); /* Bright golden glow on tap */
-        }
-
-        /* --- Bottom Nav Bar (Missions, Hangar, Shop, Events) --- */
-        .bottom-nav-bar {
-            position: absolute;
-            bottom: 3%;
-            left: 0;
-            width: 100%;
-            height: 10%;
             z-index: 10;
-            display: flex;
-            justify-content: space-around;
-            padding: 0 5%;
-        }
-
-        .nav-btn-target {
-            width: 20%; /* Space for each button */
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.0);
-            cursor: pointer;
-            border-radius: 12px;
-            
+            border-radius: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            overflow: hidden;
             will-change: transform;
-            animation: pulse-cue 3s infinite ease-in-out;
-            transition: transform 0.1s ease;
+            animation: pulseBorder 2.4s infinite ease-in-out;
         }
 
-        .nav-btn-target:active {
-            transform: scale(0.90);
+        /* Continuous Dynamic Shine Overlay */
+        .btn-target::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -120%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.7) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(25deg);
+            animation: lightSweep 2.8s infinite ease-in-out;
         }
 
-        /* --- KEYFRAMES FOR ANIMATIONS --- */
-        
-        /* Core pulsing effect: changes scale and shadow softly */
-        @keyframes pulse-cue {
-            0% { transform: scale(1) translateZ(0); box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-            50% { transform: scale(1.05) translateZ(0); box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
-            100% { transform: scale(1) translateZ(0); box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+        /* Touch Instant Response */
+        .btn-target:active {
+            transform: scale(0.90) !important;
+            filter: brightness(1.4);
         }
 
-        /* Sweeping white shine effect (standard buttons) */
-        @keyframes shine-sweep {
-            0% { box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.0); }
-            50% { box-shadow: inset -100px 0 20px -20px rgba(255, 255, 255, 0.5); }
-            100% { box-shadow: inset 100px 0 20px -20px rgba(255, 255, 255, 0.0); }
+        /* ----- EXACT IMAGE BUTTON POSITIONS ----- */
+
+        /* Left Column */
+        .btn-high-score    { top: 33%; left: 3.5%; width: 20.5%; height: 11.5%; animation-delay: 0s; }
+        .btn-missions-left { top: 47%; left: 3.5%; width: 20.5%; height: 11.5%; animation-delay: 0.3s; }
+        .btn-daily-reward  { top: 61%; left: 3.5%; width: 20.5%; height: 11.5%; animation-delay: 0.6s; }
+
+        /* Right Column */
+        .btn-fuel          { top: 33%; right: 3.5%; width: 20.5%; height: 11.5%; animation-delay: 0.2s; }
+        .btn-hangar-right  { top: 47%; right: 3.5%; width: 20.5%; height: 11.5%; animation-delay: 0.5s; }
+        .btn-events-right  { top: 61%; right: 3.5%; width: 20.5%; height: 11.5%; animation-delay: 0.8s; }
+
+        /* TAP TO PLAY Button */
+        .btn-play {
+            top: 76.8%;
+            left: 25.5%;
+            width: 49%;
+            height: 7.2%;
+            border-radius: 35px;
+            border: 3px solid #ffffff;
+            animation: playGlow 1.6s infinite ease-in-out;
+        }
+        .btn-play::after {
+            animation-duration: 2s;
         }
 
-        /* Sweeping intense golden/white shine for the main PLAY button */
-        @keyframes shine-sweep-intense {
-            0% { box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.0); }
-            50% { box-shadow: inset -120px 0 30px -30px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 223, 0, 0.5); }
-            100% { box-shadow: inset 120px 0 30px -30px rgba(255, 255, 255, 0.0); }
-        }
+        /* Bottom Navigation Bar */
+        .btn-nav-missions { top: 87.2%; left: 3.5%; width: 21%; height: 9.8%; animation-delay: 0.1s; }
+        .btn-nav-hangar   { top: 87.2%; left: 27.5%; width: 21%; height: 9.8%; animation-delay: 0.3s; }
+        .btn-nav-shop     { top: 87.2%; left: 51.5%; width: 21%; height: 9.8%; animation-delay: 0.5s; }
+        .btn-nav-events   { top: 87.2%; left: 75.5%; width: 21%; height: 9.8%; animation-delay: 0.7s; }
 
     </style>
 </head>
 <body>
 
     <div id="game-wrapper">
-        <img src="main_menu.jpg" alt="Sky Dash Menu Background" class="background-sky" loading="eager">
+        <img src="main_menu.jpg" alt="Sky Dash Menu" class="bg-image" fetchpriority="high">
 
-        <div class="left-col-buttons">
-            <div class="btn-target" onclick="console.log('High Score Tapped')"></div>
-            <div class="btn-target" onclick="console.log('Missions Tapped')"></div>
-            <div class="btn-target" onclick="console.log('Daily Reward Tapped')"></div>
-        </div>
+        <!-- Left Column Buttons -->
+        <div class="btn-target btn-high-score" onclick="openPopup('High Score')"></div>
+        <div class="btn-target btn-missions-left" onclick="openPopup('Missions')"></div>
+        <div class="btn-target btn-daily-reward" onclick="openPopup('Daily Reward')"></div>
 
-        <div class="right-col-buttons">
-            <div class="btn-target" onclick="console.log('Fuel Tapped')"></div>
-            <div class="btn-target" onclick="console.log('Hangar Tapped')"></div>
-            <div class="btn-target" onclick="console.log('Events Tapped')"></div>
-        </div>
+        <!-- Right Column Buttons -->
+        <div class="btn-target btn-fuel" onclick="openPopup('Fuel')"></div>
+        <div class="btn-target btn-hangar-right" onclick="openPopup('Hangar')"></div>
+        <div class="btn-target btn-events-right" onclick="openPopup('Events')"></div>
 
-        <div class="play-button-overlay" onclick="startGame()"></div>
+        <!-- Play Button -->
+        <div class="btn-target btn-play" onclick="startGame()"></div>
 
-        <div class="bottom-nav-bar">
-            <div class="nav-btn-target" onclick="console.log('Nav Missions Tapped')"></div>
-            <div class="nav-btn-target" onclick="console.log('Nav Hangar Tapped')"></div>
-            <div class="nav-btn-target" onclick="console.log('Nav Shop Tapped')"></div>
-            <div class="nav-btn-target" onclick="console.log('Nav Events Tapped')"></div>
-        </div>
+        <!-- Bottom Nav Bar -->
+        <div class="btn-target btn-nav-missions" onclick="openPopup('Missions')"></div>
+        <div class="btn-target btn-nav-hangar" onclick="openPopup('Hangar')"></div>
+        <div class="btn-target btn-nav-shop" onclick="openPopup('Shop')"></div>
+        <div class="btn-target btn-nav-events" onclick="openPopup('Events')"></div>
     </div>
 
     <script>
-        // High-Performance Game Engine Logic for Universal Screen Fitting
-        const gameEngine = {
-            wrapper: document.getElementById('game-wrapper'),
-            init() {
-                // Instantly update the viewport to fit any screen smoothly
-                this.updateViewport();
-                // Listen for window resize to maintain perfect fit without lag
-                window.addEventListener('resize', () => this.updateViewport());
-            },
-
-            // Universal Screen Fitting Logic (Edge-to-Edge with intelligent cropping)
-            updateViewport() {
-                const availableHeight = window.innerHeight;
-                const availableWidth = window.innerWidth;
-                
-                // Set a fixed aspect ratio (9:16 portrait) for the game engine
-                const gameAspectRatio = 9 / 16;
-                let requiredWidth, requiredHeight;
-
-                // Adjust based on portrait or landscape orientation to ensure full edge fit
-                if (availableWidth / availableHeight < gameAspectRatio) {
-                    // Portrait (Narrow screen) - scale to full width, crop height
-                    requiredWidth = availableWidth;
-                    requiredHeight = availableWidth / gameAspectRatio;
-                } else {
-                    // Landscape (Wide screen) - scale to full height, crop width
-                    requiredWidth = availableHeight * gameAspectRatio;
-                    requiredHeight = availableHeight;
-                }
-
-                // Force these dimensions on the game container for zero-lag consistency
-                this.wrapper.style.width = requiredWidth + 'px';
-                this.wrapper.style.height = requiredHeight + 'px';
-            }
-        };
-
-        // Navigation function: redirect to the gameplay HTML file smoothly
         function startGame() {
-            // A slight 50ms delay can ensure the tap haptic registers on native devices
-            setTimeout(() => {
-                window.location.href = "game.html";
-            }, 50);
+            window.location.href = "game.html";
         }
 
-        // Fire up the optimized viewport logic
-        gameEngine.init();
-
+        function openPopup(featureName) {
+            alert(featureName + " feature is coming soon!");
+        }
     </script>
 
 </body>
