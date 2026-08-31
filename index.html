@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sky Dash</title>
     
-    <!-- Ultra-fast GPU Image Preload -->
-    <link rel="preload" as="image" href="logo.jpg" fetchpriority="high">
+    <!-- Ultra-Fast Preload Direct Path -->
+    <link rel="preload" as="image" href="./logo.jpg" fetchpriority="high">
 
     <style>
         * {
@@ -42,7 +42,7 @@
             object-fit: cover;
             object-position: center;
             
-            /* Hardware acceleration for zero-lag rendering */
+            /* Hardware Acceleration for 60FPS */
             will-change: transform, opacity;
             transform: translate3d(0, 0, 0);
             backface-visibility: hidden;
@@ -63,25 +63,14 @@
 </head>
 <body>
 
-    <!-- High Priority Image Asset -->
-    <img src="logo.jpg" alt="Sky Dash Logo" class="splash-logo" id="logoImg" fetchpriority="high" decoding="sync">
+    <!-- Explicit Relative Path Fix -->
+    <img src="./logo.jpg" alt="Sky Dash Logo" class="splash-logo" fetchpriority="high" decoding="sync">
 
     <script>
-        // Force pre-decoding in hardware cache before display
-        const img = document.getElementById('logoImg');
-        if (img.complete) {
-            startTimer();
-        } else {
-            img.onload = startTimer;
-            img.onerror = startTimer;
-        }
-
-        function startTimer() {
-            // Exactly 7 seconds (7000ms) delay
-            setTimeout(() => {
-                window.location.href = "loading.html";
-            }, 7000);
-        }
+        // Exactly 7 seconds (7000ms) delay
+        setTimeout(() => {
+            window.location.href = "loading.html";
+        }, 7000);
     </script>
 
 </body>
