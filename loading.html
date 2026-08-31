@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sky Dash - Loading</title>
+    
+    <!-- Preload Video Asset During Loading for Zero-Lag Menu Transition -->
+    <link rel="preload" as="video" href="menu_bg.mp4" type="video/mp4">
+
     <style>
         * {
             margin: 0;
@@ -16,6 +20,7 @@
         html, body {
             width: 100vw;
             height: 100vh;
+            height: -webkit-fill-available;
             height: 100dvh; /* Universal Screen Height Fix */
             overflow: hidden;
             background-color: #0d1b2a;
@@ -26,6 +31,8 @@
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
         }
         
         /* Universal Fullscreen Background (GPU Accelerated) */
@@ -35,12 +42,13 @@
             left: 0;
             width: 100vw;
             height: 100vh;
+            height: -webkit-fill-available;
             height: 100dvh;
             object-fit: cover;
             object-position: center;
             z-index: 1;
             will-change: transform;
-            transform: translateZ(0);
+            transform: translate3d(0, 0, 0);
             backface-visibility: hidden;
         }
 
@@ -118,7 +126,8 @@
             if (progressRatio < 1) {
                 requestAnimationFrame(updateProgress); // Smooth 60FPS update loop without lag
             } else {
-                window.location.href = "game.html"; // Redirect to game after 13s
+                // Redirect to Main Menu Video Screen after 13s
+                window.location.href = "main_menu.html"; 
             }
         }
 
