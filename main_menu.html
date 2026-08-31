@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sky Dash - Main Menu</title>
     
+    <!-- Image Preload for Super-Fast Loading -->
+    <link rel="preload" as="image" href="main_menu.jpg" fetchpriority="high">
+
     <style>
         * {
             margin: 0;
@@ -27,79 +30,103 @@
             left: 0;
         }
 
-        /* Fullscreen Video Background */
-        .bg-video {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Responsive Main Container */
+        .menu-wrapper {
+            position: relative;
             width: 100vw;
             height: 100vh;
             height: -webkit-fill-available;
             height: 100dvh;
-            object-fit: cover;
-            object-position: center;
-            z-index: 1;
+            max-width: 500px;
+            margin: 0 auto;
+            overflow: hidden;
+            /* GPU Speed Optimization */
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
 
-        /* Visible/Invisible Overlay Play Area */
-        .play-btn-area {
+        /* Full Screen Background Image */
+        .bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        /* Invisible Touch Buttons Base */
+        .btn-target {
             position: absolute;
-            z-index: 10;
             cursor: pointer;
-            left: 50%;
-            top: 75%;
-            transform: translate(-50%, -50%);
-            width: 220px;
-            height: 70px;
-            background: linear-gradient(135deg, #ff9f04, #ff5e00);
-            border: 3px solid #ffffff;
-            border-radius: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
-            transition: transform 0.1s ease;
+            z-index: 10;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0); /* Completely Invisible */
+            transition: transform 0.08s ease;
         }
-        
-        .play-btn-area:active {
-            transform: translate(-50%, -50%) scale(0.92);
+
+        /* Smooth Touch Press Effect */
+        .btn-target:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.2);
         }
+
+        /* --- PHOTO KE BUTTONS KI EXACT POSITION --- */
+
+        /* Left Column Buttons */
+        .btn-high-score { top: 33.5%; left: 3.5%; width: 20%; height: 11%; }
+        .btn-missions-left { top: 47.5%; left: 3.5%; width: 20%; height: 11%; }
+        .btn-daily-reward { top: 61.5%; left: 3.5%; width: 20%; height: 11%; }
+
+        /* Right Column Buttons */
+        .btn-fuel { top: 33.5%; right: 3.5%; width: 20%; height: 11%; }
+        .btn-hangar-right { top: 47.5%; right: 3.5%; width: 20%; height: 11%; }
+        .btn-events-right { top: 61.5%; right: 3.5%; width: 20%; height: 11%; }
+
+        /* TAP TO PLAY Button */
+        .btn-play { top: 76.8%; left: 25.5%; width: 49%; height: 7.5%; border-radius: 35px; }
+
+        /* Bottom Menu Bar Buttons */
+        .btn-nav-missions { top: 87.5%; left: 3.5%; width: 21%; height: 9.5%; }
+        .btn-nav-hangar { top: 87.5%; left: 27.5%; width: 21%; height: 9.5%; }
+        .btn-nav-shop { top: 87.5%; left: 51.5%; width: 21%; height: 9.5%; }
+        .btn-nav-events { top: 87.5%; left: 75.5%; width: 21%; height: 9.5%; }
     </style>
 </head>
 <body>
 
-    <!-- Autoplay Video Tag -->
-    <video class="bg-video" id="menuVideo" autoplay loop muted playsinline preload="auto">
-        <source src="menu_bg.mp4" type="video/mp4">
-        <source src="VID-20260831-WA6711.mp4" type="video/mp4">
-    </video>
+    <div class="menu-wrapper">
+        <!-- Main Background Image -->
+        <img src="main_menu.jpg" alt="Sky Dash Menu" class="bg-image" fetchpriority="high" decoding="sync">
 
-    <!-- Play Button -->
-    <div class="play-btn-area" id="playBtn" onclick="startGame()">PLAY</div>
+        <!-- Left Buttons Touch Layer -->
+        <div class="btn-target btn-high-score" onclick="openPopup('High Score')"></div>
+        <div class="btn-target btn-missions-left" onclick="openPopup('Missions')"></div>
+        <div class="btn-target btn-daily-reward" onclick="openPopup('Daily Reward')"></div>
+
+        <!-- Right Buttons Touch Layer -->
+        <div class="btn-target btn-fuel" onclick="openPopup('Fuel / Energy')"></div>
+        <div class="btn-target btn-hangar-right" onclick="openPopup('Hangar')"></div>
+        <div class="btn-target btn-events-right" onclick="openPopup('Events')"></div>
+
+        <!-- TAP TO PLAY Touch Layer -->
+        <div class="btn-target btn-play" onclick="startGame()"></div>
+
+        <!-- Bottom Navigation Bar Touch Layer -->
+        <div class="btn-target btn-nav-missions" onclick="openPopup('Missions')"></div>
+        <div class="btn-target btn-nav-hangar" onclick="openPopup('Hangar')"></div>
+        <div class="btn-target btn-nav-shop" onclick="openPopup('Shop')"></div>
+        <div class="btn-target btn-nav-events" onclick="openPopup('Events')"></div>
+    </div>
 
     <script>
-        const video = document.getElementById('menuVideo');
-
-        // Force Autoplay on Mobile Devices
-        function playVideo() {
-            if (video) {
-                video.play().catch(function(error) {
-                    console.log("Autoplay blocked, waiting for touch");
-                });
-            }
-        }
-
-        window.addEventListener('load', playVideo);
-        document.addEventListener('touchstart', playVideo, { once: true });
-        document.addEventListener('click', playVideo, { once: true });
-
+        // Start Game Redirect
         function startGame() {
             window.location.href = "game.html";
+        }
+
+        // Popup Message for Other Buttons
+        function openPopup(name) {
+            alert(name + " feature is coming soon!");
         }
     </script>
 
