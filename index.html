@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sky Dash</title>
     <style>
         * {
@@ -10,40 +10,56 @@
             padding: 0;
             box-sizing: border-box;
             user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
         }
         html, body {
             width: 100vw;
             height: 100vh;
+            height: 100dvh; /* Universal mobile screen fix */
             overflow: hidden;
             background-color: #0d1b2a;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
         .splash-logo {
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             object-fit: cover;
-            animation: fadeIn 1s ease-in-out;
+            object-position: center;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from { 
+                opacity: 0; 
+                transform: scale(0.98) translateZ(0); 
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1) translateZ(0); 
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Splash Logo Image -->
-    <img src="logo.png" alt="Sky Dash Logo" class="splash-logo">
+    <!-- Priority Loading for zero lag -->
+    <img src="logo.png" alt="Sky Dash Logo" class="splash-logo" fetchpriority="high" decoding="sync">
 
     <script>
-        // Exactly 4.5 seconds (4500ms) baad loading.html par bhejega
+        // Exactly 7 seconds (7000ms) delay
         setTimeout(() => {
             window.location.href = "loading.html";
-        }, 4500);
+        }, 7000);
     </script>
 
 </body>
 </html>
-
