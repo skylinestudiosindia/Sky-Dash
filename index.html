@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sky Dash</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #0d1b2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .splash-logo {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Splash Logo Image -->
+    <img src="logo.png" alt="Sky Dash Logo" class="splash-logo">
+
+    <script>
+        // Exactly 4.5 seconds (4500ms) baad loading.html par bhejega
+        setTimeout(() => {
+            window.location.href = "loading.html";
+        }, 4500);
+    </script>
+
+</body>
+</html>
+
