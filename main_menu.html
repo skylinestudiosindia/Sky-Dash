@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sky Dash - Main Menu</title>
     
-    <!-- Ultra-Fast High Priority Asset Loading -->
-    <link rel="preload" as="video" href="menu_bg.mp4" type="video/mp4" fetchpriority="high">
-
     <style>
         * {
             margin: 0;
@@ -28,11 +25,9 @@
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
         }
 
-        /* Fullscreen Hardware Accelerated Video Layer */
+        /* Fullscreen Video Background */
         .bg-video {
             position: absolute;
             top: 0;
@@ -44,62 +39,65 @@
             object-fit: cover;
             object-position: center;
             z-index: 1;
-
-            /* Force GPU Offloading for 60FPS Video Rendering */
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-            backface-visibility: hidden;
         }
 
-        /* Transparent Interactive Play Button Overlay */
+        /* Visible/Invisible Overlay Play Area */
         .play-btn-area {
             position: absolute;
             z-index: 10;
             cursor: pointer;
-            
-            /* Center-Bottom Overlay Position (Adjustable if needed) */
             left: 50%;
             top: 75%;
             transform: translate(-50%, -50%);
-            width: 250px;
-            height: 85px;
-            
-            /* Completely Invisible Area */
-            background: rgba(0, 0, 0, 0); 
-            border-radius: 20px;
+            width: 220px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff9f04, #ff5e00);
+            border: 3px solid #ffffff;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            transition: transform 0.1s ease;
         }
         
-        /* Smooth Haptic-Like Touch Response */
         .play-btn-area:active {
-            transform: translate(-50%, -50%) scale(0.94);
-            background: rgba(255, 255, 255, 0.15);
+            transform: translate(-50%, -50%) scale(0.92);
         }
     </style>
 </head>
 <body>
 
-    <!-- Native Mobile Autoplay Video Loop -->
+    <!-- Autoplay Video Tag -->
     <video class="bg-video" id="menuVideo" autoplay loop muted playsinline preload="auto">
         <source src="menu_bg.mp4" type="video/mp4">
+        <source src="VID-20260831-WA6711.mp4" type="video/mp4">
     </video>
 
-    <!-- Invisible Touch Target mapped over Video Button -->
-    <div class="play-btn-area" id="playBtn" onclick="startGame()"></div>
+    <!-- Play Button -->
+    <div class="play-btn-area" id="playBtn" onclick="startGame()">PLAY</div>
 
     <script>
         const video = document.getElementById('menuVideo');
 
-        // Force Video Playback on low-power devices
-        document.addEventListener('DOMContentLoaded', () => {
-            video.play().catch(() => {
-                // Autoplay policy fallback
-                document.body.addEventListener('touchstart', () => {
-                    video.play();
-                }, { once: true });
-            });
-        });
+        // Force Autoplay on Mobile Devices
+        function playVideo() {
+            if (video) {
+                video.play().catch(function(error) {
+                    console.log("Autoplay blocked, waiting for touch");
+                });
+            }
+        }
 
-        // Instant Redirection to Game Loop
+        window.addEventListener('load', playVideo);
+        document.addEventListener('touchstart', playVideo, { once: true });
+        document.addEventListener('click', playVideo, { once: true });
+
         function startGame() {
             window.location.href = "game.html";
         }
