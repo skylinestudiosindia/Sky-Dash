@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Sky Dash - Main Menu</title>
+    
+    <!-- Ultra-Fast High Priority Asset Loading -->
+    <link rel="preload" as="video" href="menu_bg.mp4" type="video/mp4" fetchpriority="high">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            height: -webkit-fill-available;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: #0d1b2a;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        /* Fullscreen Hardware Accelerated Video Layer */
+        .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: -webkit-fill-available;
+            height: 100dvh;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+
+            /* Force GPU Offloading for 60FPS Video Rendering */
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+        }
+
+        /* Transparent Interactive Play Button Overlay */
+        .play-btn-area {
+            position: absolute;
+            z-index: 10;
+            cursor: pointer;
+            
+            /* Center-Bottom Overlay Position (Adjustable if needed) */
+            left: 50%;
+            top: 75%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 85px;
+            
+            /* Completely Invisible Area */
+            background: rgba(0, 0, 0, 0); 
+            border-radius: 20px;
+        }
+        
+        /* Smooth Haptic-Like Touch Response */
+        .play-btn-area:active {
+            transform: translate(-50%, -50%) scale(0.94);
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Native Mobile Autoplay Video Loop -->
+    <video class="bg-video" id="menuVideo" autoplay loop muted playsinline preload="auto">
+        <source src="menu_bg.mp4" type="video/mp4">
+    </video>
+
+    <!-- Invisible Touch Target mapped over Video Button -->
+    <div class="play-btn-area" id="playBtn" onclick="startGame()"></div>
+
+    <script>
+        const video = document.getElementById('menuVideo');
+
+        // Force Video Playback on low-power devices
+        document.addEventListener('DOMContentLoaded', () => {
+            video.play().catch(() => {
+                // Autoplay policy fallback
+                document.body.addEventListener('touchstart', () => {
+                    video.play();
+                }, { once: true });
+            });
+        });
+
+        // Instant Redirection to Game Loop
+        function startGame() {
+            window.location.href = "game.html";
+        }
+    </script>
+
+</body>
+</html>
+
