@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sky Dash</title>
+    
+    <!-- Ultra-fast GPU Image Preload -->
+    <link rel="preload" as="image" href="logo.jpg" fetchpriority="high">
+
     <style>
         * {
             margin: 0;
@@ -12,11 +16,13 @@
             user-select: none;
             -webkit-user-select: none;
             -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
         }
         html, body {
             width: 100vw;
             height: 100vh;
-            height: 100dvh; /* Universal mobile screen fix */
+            height: -webkit-fill-available;
+            height: 100dvh;
             overflow: hidden;
             background-color: #0d1b2a;
             display: flex;
@@ -25,40 +31,57 @@
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
         }
         .splash-logo {
             width: 100vw;
             height: 100vh;
+            height: -webkit-fill-available;
             height: 100dvh;
             object-fit: cover;
             object-position: center;
+            
+            /* Hardware acceleration for zero-lag rendering */
             will-change: transform, opacity;
-            transform: translateZ(0);
+            transform: translate3d(0, 0, 0);
             backface-visibility: hidden;
+            perspective: 1000px;
             animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
         @keyframes fadeIn {
             from { 
                 opacity: 0; 
-                transform: scale(0.98) translateZ(0); 
+                transform: scale(0.98) translate3d(0, 0, 0); 
             }
             to { 
                 opacity: 1; 
-                transform: scale(1) translateZ(0); 
+                transform: scale(1) translate3d(0, 0, 0); 
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Priority Loading for zero lag -->
-    <img src="logo.png" alt="Sky Dash Logo" class="splash-logo" fetchpriority="high" decoding="sync">
+    <!-- High Priority Image Asset -->
+    <img src="logo.jpg" alt="Sky Dash Logo" class="splash-logo" id="logoImg" fetchpriority="high" decoding="sync">
 
     <script>
-        // Exactly 7 seconds (7000ms) delay
-        setTimeout(() => {
-            window.location.href = "loading.html";
-        }, 7000);
+        // Force pre-decoding in hardware cache before display
+        const img = document.getElementById('logoImg');
+        if (img.complete) {
+            startTimer();
+        } else {
+            img.onload = startTimer;
+            img.onerror = startTimer;
+        }
+
+        function startTimer() {
+            // Exactly 7 seconds (7000ms) delay
+            setTimeout(() => {
+                window.location.href = "loading.html";
+            }, 7000);
+        }
     </script>
 
 </body>
